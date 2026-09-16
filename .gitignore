@@ -1,0 +1,36 @@
+# 编译产物
+*.exe
+*.dll
+*.pdb
+*.bin
+_build_test.bin
+
+# 构建/运行产生的目录
+bin/
+obj/
+_output/
+_验收输出/
+MIDI/
+*.log
+
+# 用户本地配置（含个人设置与热键）
+设置.ini
+*.ini
+*.lnk
+
+# 测试与临时文件
+*.tmp
+*.bak
+*.bak-*
+*.user
+*.suo
+.vs/
+__pycache__/
+*.pyc
+
+# 本地示例曲目（避免版权问题，不入库）
+*.mid
+*.midi
+*.mp3
+*.wav
+*.flac
