@@ -5078,7 +5078,7 @@ namespace DeltaHarp
     public static class Program
     {
         /// <summary>本项目地址（"关于"里点开它）。发布前改成你自己的仓库。</summary>
-        public const string ProjectUrl = "https://github.com/USERNAME/harmonica-simulator";
+        public const string ProjectUrl = "https://github.com/zishangyeyou/harmonica-simulator";
 
         [STAThread]
         public static void Main(string[] args)
