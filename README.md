@@ -1,5 +1,9 @@
 ﻿# 口琴模拟器 Harmonica Simulator
 
+[![build](https://github.com/zishangyeyou/harmonica-simulator/actions/workflows/build.yml/badge.svg)](https://github.com/zishangyeyou/harmonica-simulator/actions/workflows/build.yml)
+![platform](https://img.shields.io/badge/platform-Windows%2010%20%2F%2011-0078D6)
+![license](https://img.shields.io/badge/license-Personal%20Use%20Only-orange)
+
 一个 Windows 桌面的 **8 孔口琴指法模拟器**：
 导入 MIDI，把音符映射成 8 个音键加鼠标修饰键，可以在本地试听、
 跟着谱子练习，也可以导出成宏文件。
