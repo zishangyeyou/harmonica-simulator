@@ -1,4 +1,4 @@
-# 口琴模拟器 Harmonica Simulator
+﻿# 口琴模拟器 Harmonica Simulator
 
 一个 Windows 桌面的 **8 孔口琴指法模拟器**：
 导入 MIDI，把音符映射成 8 个音键加鼠标修饰键，可以在本地试听、
@@ -56,8 +56,19 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe ^
 
 编译完双击 `HarpSimulator.exe` 即可。
 
-> 部分杀毒软件会把这类"模拟输入"的程序判为可疑（启发式误报）。
-> 这是同类工具的常见现象，不是病毒。源码全部公开，可自行审查。
+> ⚠️ **杀毒软件误报说明**
+> 部分杀毒软件（已确认的有卡巴斯基）会把这类"模拟输入"的程序判为可疑，
+> 报出的名字通常是 `VHO:Worm.Win32.Convagent.gen`、`VHO:Trojan.MSIL.Agent.gen`、
+> `VHO:Backdoor.MSIL.XWorm.gen` 这类带 **`VHO`（启发式可疑对象）** 或
+> **`.gen`（泛化规则）** 标记的名称 —— 它们不是具体病毒的特征码。
+>
+> 原因：`SendInput`（发送按键）+ `GetAsyncKeyState`（读按键）+ `RegisterHotKey`（全局热键）
+> 这组接口既是宏软件的特征，也是键盘记录器的特征，加上 exe 没有数字签名，
+> 云保护就从严判定。罗技 G HUB、雷蛇 Synapse、AutoHotkey 编译的脚本都长期被误报。
+>
+> **这不是病毒。** 可自行核实：搜索源码或 exe 字符串，确认没有任何
+> 自启动、传播、联网下载、进程注入、注册表写入的代码。
+> 详见仓库内的说明或 `docs/` 目录。
 
 ---
 

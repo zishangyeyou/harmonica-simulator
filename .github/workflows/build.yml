@@ -1,0 +1,55 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 找一个可用的 C# 编译器：优先 .NET Framework 自带的那份。
+      # 不写死单一路径，避免 runner 镜像差异导致 CI 假失败。
+      - name: Locate csc.exe
+        shell: pwsh
+        run: |
+          $cands = @(
+            "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe",
+            "$env:WINDIR\Microsoft.NET\Framework\v4.0.30319\csc.exe",
+            "${env:ProgramFiles(x86)}\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\csc.exe"
+          )
+          $csc = $cands | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $csc) { throw "No csc.exe found on this runner" }
+          "CSC=$csc" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          Write-Host "Using: $csc"
+
+      - name: Compile
+        shell: pwsh
+        run: |
+          & $env:CSC /nologo /t:winexe `
+            /out:HarpSimulator.exe `
+            /r:System.Windows.Forms.dll /r:System.Drawing.dll `
+            /codepage:65001 /utf8output `
+            src\HarpSimulator.cs
+          if ($LASTEXITCODE -ne 0) { throw "compile failed" }
+
+      - name: Verify output
+        shell: pwsh
+        run: |
+          if (-not (Test-Path HarpSimulator.exe)) { throw "no output" }
+          $f = Get-Item HarpSimulator.exe
+          Write-Host ("Build OK: {0} bytes" -f $f.Length)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HarpSimulator-win-x64
+          path: HarpSimulator.exe
+          if-no-files-found: error
